@@ -22,11 +22,13 @@ function simplifyPlaylistJSON (playlists) {
 	var relevantJSON;
 	// TODO : Only now for testing phase
 	var jsonContent = readGivenFile('playlists.json');
+	/*
 	try {
 		jsonContent = JSON.parse(playlists);
 	} catch (err) {
 		jsonContent = playlists;
 	}
+	*/
 	
 	// We create a new json file only with relevant informations
 	var nOfPlaylists = Math.min(jsonContent['limit'], jsonContent['total']);
@@ -77,11 +79,13 @@ function simplifyTracksJSON (tracks) {
 	// TODO only here for testing phase
 	var jsonContent = readGivenFile('tracks_PL1.json');
 	//var jsonContent = readGivenFile('tracks_PL2.json');
+	/*
 	try {
 		jsonContent = JSON.parse(tracks);
 	} catch (err) {
 		jsonContent = tracks;
 	}
+	*/
 	
 	// We create a new json file only with relevant informations
 	var nOfTracks = Math.min(jsonContent['limit'], jsonContent['total']);
