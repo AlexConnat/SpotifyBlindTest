@@ -1,4 +1,4 @@
-var displayPlaylists = function(playlists) {
+function displayPlaylists (playlists) {
   var items = playlists['items']
   var sb = "<ul>"
   items.forEach(function(item) {
