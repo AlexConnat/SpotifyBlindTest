@@ -5,6 +5,18 @@
  
 /**
  * This method will simplify the playlists json to keep only what we use
+ * 
+ * Return a json like following : 
+ * {
+ *		'items' : {
+ * 			"id" : id, 
+ *			"image" : image url,
+ *			"name" : Playlist name, 
+ * 			"tracks" : query for getting tracks,
+ * 			}
+ * 		'next' : null or next query url,
+ *		'size' : nOfPlaylists
+ * }
  */
 function simplifyPlaylistJSON (playlists) {
 	var relevantJSON;
@@ -33,7 +45,7 @@ function simplifyPlaylistJSON (playlists) {
 	}
 	
 	relevantJSON = {
-		'items' : (myItems),
+		'items' : myItems,
 		'next' : jsonContent['next'],
 		'size' : nOfPlaylists
 		};
@@ -43,6 +55,21 @@ function simplifyPlaylistJSON (playlists) {
 
 /**
  * This method will simplify the tracks json to keep only what we use
+ * 
+ * Return a json like following : 
+ * {
+ *		'items' : {
+ * 			"artist_name" : Bla bla - Bli bli, 
+ *			"album_name" : Album bla,
+ *			"track_name" : Bliolas, 
+ * 			"cover_url" : cover url,
+ *			"mp3_preview" : preview url,
+ *			"track_url" : track url,
+ * 			}
+ * 		'next' : null or next query url,
+ *		'size' : nOfTracks
+ * }
+ * 
  */
 function simplifyTracksJSON (tracks) {
 	var relevantJSON;
@@ -65,8 +92,11 @@ function simplifyTracksJSON (tracks) {
 		var artistsNames = "";
 		
 		artists.forEach(function(artist) {
-			artistsNames += artist["name"];
+			artistsNames += ' - ' + artist["name"];
 		});
+		
+		// Removes the first ' - ' 
+		artistsNames = artistsNames.substr(3);
 		
 		var cover;
 		
@@ -102,7 +132,7 @@ function simplifyTracksJSON (tracks) {
  */
 function test() {
 	var fs = require('fs');
-	fs.readFile('testPlaylists.json', 'utf-8', function read(err, data) {
+	fs.readFile('testTracks.json', 'utf-8', function read(err, data) {
 		if (err) {
 			throw err;
 		}
@@ -129,8 +159,11 @@ function test() {
 			var artistsNames = "";
 			
 			artists.forEach(function(artist) {
-				artistsNames += artist["name"];
+				artistsNames += ' - ' + artist["name"];
 			});
+		
+			// Removes the first ' - ' 
+			artistsNames = artistsNames.substr(3);
 			
 			var cover;
 			
@@ -158,7 +191,7 @@ function test() {
 			'size' : nOfTracks
 			};
 		
-		var i = 2;
+		var i = 3;
 		
 		console.log(relevantJSON.items[i].artist_name);
 		console.log(relevantJSON.items[i].track_url);
