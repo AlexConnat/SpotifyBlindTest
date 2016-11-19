@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="temp_style.css" />
+  <link rel="icon" href="img/favicon.ico" />
+  <script src="playlists.js"></script>
+  <script src="simplify_json.js"></script>
+  <title>Spotify BlindTest</title>
+</head>
+
+<body>
+
+<header class="header">
+  <h1><img src="img/logo.png" width="300" height="auto" alt="header-logo"/></h1>
+</header>
+
+<div class="page-wrap">
+  <div class="content">
+  <div id="test"></div>
+  <script type="text/javascript">
+  /*
+    displayPlaylists(simplifyPlaylistJSON(null));
+  */
+
+    test = { "items":
+      [
+        {name: "Jazz", id: "3h7GKsbeo718eh74", image: "http://21pilotstour.com/wp-content/uploads/2016/02/blurryface-album-cover.jpg", nb_tracks: 34},
+        {name: "Pop-Rock", id: "y0l0tRRy77zjakvV1", image: "http://cdn02.cdn.justjared.com/wp-content/uploads/headlines/2013/08/avril-lavigne-goes-emo-for-new-self-titled-album-cover.jpg", nb_tracks: 12}
+      ]
+    }
+    displayPlaylists(test)
+
+  </script>
+  </div>
+</div>
+</body>
+</html>
