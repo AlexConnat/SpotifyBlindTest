@@ -20,7 +20,8 @@
  */
 function simplifyPlaylistJSON (playlists) {
 	var relevantJSON;
-	var jsonContent;
+	// TODO : Only now for testing phase
+	var jsonContent = readGivenFile('playlists.json');
 	try {
 		jsonContent = JSON.parse(playlists);
 	} catch (err) {
@@ -73,7 +74,9 @@ function simplifyPlaylistJSON (playlists) {
  */
 function simplifyTracksJSON (tracks) {
 	var relevantJSON;
-	var jsonContent;
+	// TODO only here for testing phase
+	var jsonContent = readGivenFile('tracks_PL1.json');
+	//var jsonContent = readGivenFile('tracks_PL2.json');
 	try {
 		jsonContent = JSON.parse(tracks);
 	} catch (err) {
@@ -127,6 +130,25 @@ function simplifyTracksJSON (tracks) {
 	return relevantJSON;
 }
 
+
+/**
+ * For now jsons are taken in files for testing phase.
+ * 
+ */
+function readGivenFile(filename) {
+	var content;
+	
+	fs.readFile(filename, 'utf-8', function read(err, data) {
+		if (err) {
+			throw err;
+		}
+		content = data;		
+	});
+	
+	return JSON.parse(content);
+}
+ 
+ 
 /**
  * Just a test method
  */
@@ -197,7 +219,6 @@ function test() {
 		console.log(relevantJSON.items[i].track_url);
 		console.log(relevantJSON.items[i].mp3_preview);
 	}
-
 }
 
 
