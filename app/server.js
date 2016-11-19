@@ -92,7 +92,7 @@ app.get('/playlists', function(req, res) {
   var options = {
     url: 'https://api.spotify.com/v1/me/playlists',
     headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
-    // params: { limit: 50 },
+    params: { limit: 50 },
     json: true
   };
 
@@ -105,15 +105,6 @@ app.get('/playlists', function(req, res) {
   });
 
 });
-
-// var view = {
-//   title: "Joe",
-//   calc: function () {
-//     return 2 + 4;
-//   }
-// };
-// var output = mustache.render("{{title}} spends {{calc}}", view);
-// console.log(output)
 
 
 console.log('Listening on 8888');
