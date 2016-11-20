@@ -50,7 +50,15 @@
 		htmlCode += "</div>"
 
 		return htmlCode;
+	},
+	
+	/**
+	 * Get one randomly chosen track on the tracks list
+	 */
+	getRandomTrack: function (jsonQueryTracks) {
+		return chooseRandomTrack(jsonQueryTracks);
 	}
+	
 };
 
 /**
@@ -180,3 +188,31 @@ function simplifyTracksJSON (tracks) {
 
 	return relevantJSON;
 }
+
+var it = 0;
+var tracksSchuffled;
+function chooseRandomTrack(jsonQueryTracks) {
+	if (jsonQueryTracks != null && it == 0) {
+		// We init the array on the first step 
+		var tracksArray = [];
+		tracks = simplifyTracksJSON(jsonQueryTracks);
+		tracks.foreach(function(track) {
+			tracksArray.push(track);
+		});
+		
+		tracksSchuffled = shuffle(tracksArray);
+	}
+	
+	return tracksSchuffled[it++];
+}
+
+function shuffle(array) {
+    var j, x;
+    for (var i = array.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        x = array[i - 1];
+        array[i - 1] = array[j];
+        array[j] = x;
+    }
+}
+
