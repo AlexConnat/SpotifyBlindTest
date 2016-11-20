@@ -59,6 +59,20 @@
 	 */
 	getRandomTrack: function (jsonQueryTracks) {
 		return chooseRandomTrack(jsonQueryTracks);
+	},
+	
+	/**
+	 * Function to call when we pass to the next challenge
+	 */
+	incrementIt: function() {
+		it++;
+	},
+	
+	/**
+	 * Function to call on a @return call
+	 */
+	resetIt: function() {
+		it = 0;
 	}
 
 };
@@ -197,15 +211,19 @@ function chooseRandomTrack(jsonQueryTracks) {
 	if (jsonQueryTracks != null && it == 0) {
 		// We init the array on the first step
 		tracks = simplifyTracksJSON(jsonQueryTracks);
-    items = tracks['items']
+		items = tracks['items']
 		items.forEach(function(item) {
 			tracksSchuffled.push(item);
 		});
 		shuffle(tracksSchuffled);
 	}
-	return tracksSchuffled[it++];
+	
+	return tracksSchuffled[it];
 }
 
+/**
+ * Shuffle a given array
+ */
 function shuffle(array) {
     var j, x;
     for (var i = array.length; i; i--) {

@@ -48,32 +48,36 @@ function levenshteinDistance (a, b) {
 var maxToleratedDistForArtist = 2;
 var maxToleratedDistForTracks = 3;
 
-/**
- * Compute the actual distance between the given answer and the real answer
- */
-function isTrackNameCorrect (givenAnswer, trackName) {
-	// We take the case where there are multiple artists
-	var distance = levenshteinDistance(givenAnswer.trim().toLowerCase(), trackName.trim().toLowerCase());
-	if (distance <= maxToleratedDistForTracks) {
-		return 1;
-	} else {
+ module.exports = {
+	/**
+	 * Compute the actual distance between the given answer and the real answer
+	 */
+	function isTrackNameCorrect (givenAnswer, trackName) {
+		// We take the case where there are multiple artists
+		var distance = levenshteinDistance(givenAnswer.trim().toLowerCase(), trackName.trim().toLowerCase());
+		if (distance <= maxToleratedDistForTracks) {
+			return 1;
+		} else {
+			return 0;
+		}
+	},
+
+
+	/**
+	 * Compute the actual distance between the given answer and the real answer
+	 */
+	function isArtistCorrect (givenAnswer, artists) {
+		var possibleAnswers = artists.split(" - ");
+		
+		for (var i = 0; i < possibleAnswers.length; i++) {
+			var distance = levenshteinDistance(givenAnswer.trim().toLowerCase(), possibleAnswers[i].trim().toLowerCase());
+			if (distance <= maxToleratedDistForArtist) {
+				return 1;
+			}
+		}
+		
 		return 0;
 	}
 }
-
-
-function isArtistCorrect (givenAnswer, artists) {
-	var possibleAnswers = artists.split(" - ");
-	
-	for (var i = 0; i < possibleAnswers.length; i++) {
-		var distance = levenshteinDistance(givenAnswer.trim().toLowerCase(), possibleAnswers[i].trim().toLowerCase());
-		if (distance <= maxToleratedDistForArtist) {
-			return 1;
-		}
-	}
-	
-	return 0;
-}
-
 
 
