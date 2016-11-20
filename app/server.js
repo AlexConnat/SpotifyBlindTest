@@ -122,7 +122,7 @@ app.get('/playlist/:playlist_id', function(req, res) {
   // LOAD TRACKS FOR THIS PLAYLIST_ID :
 
   var options = {
-    url: 'https://api.spotify.com/v1/users/'+USER_ID+'/playlists/'+req.params.playlist_id+'/tracks',
+    url: 'https://api.spotify.com/v1/users/'+USER_ID+'/playlists/'+req.params.playlist_id+'/tracks?limit=100',
     headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
     json: true
   };
