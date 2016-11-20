@@ -17,10 +17,10 @@
 		
 		var htmlCode = "<ul>"
 		items.forEach(function(item) {
-			htmlCode += "<li><br>";
+			htmlCode += "<div id=" + '"' + item['id'] + '"' + ">";
 			htmlCode += "<img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> ";
-			htmlCode += "<p>" + item['name'] + "</p><br>";
-			htmlCode += "</li><br>";
+			htmlCode += "<p>" + item['name'] + "</p>";
+			htmlCode += "</div><br>";
 		});
 		htmlCode += "</ul>"
 		
