@@ -21,10 +21,28 @@ img
   text-align: center;
 }
 
-ul
+#playlists-container
 {
   margin-top: 80px;
-  text-align: center;
+  padding-left: 400px;
+}
+
+a:link
+{
+  text-decoration: none;
+  color: black
+}
+
+img[width*="100"]
+{
+  vertical-align: middle;
+  padding-right: 50px;
+}
+
+p
+{
+  display: inline;
+  vertical-align: middle;
 }
 
 .page-wrap
