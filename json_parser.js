@@ -10,7 +10,7 @@
 	/**
 	 * Will display the playlists in the div with given id (@divID)
 	 */
-	displayPlaylists: function (jsonQueryPlaylists, divID) {
+	generateHTMLPlaylists: function (jsonQueryPlaylists) {
 		playlists = simplifyPlaylistJSON(jsonQueryPlaylists);
 
 		var items = playlists['items'];
@@ -20,13 +20,14 @@
 			htmlCode += "<li><p><img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> " + item['name'] + "</p></li>"
 		});
 		htmlCode += "</ul>"
-		document.getElementById(divID).innerHTML = htmlCode;
+		
+		return htmlCode;
 	},
 	
 	/**
 	 * Will display the tracks in the div with given id (@divID)
 	 */
-	displayTracks: function (jsonQueryTracks, divID) {
+	generateHTMLTracks: function (jsonQueryTracks) {
 		tracks = simplifyTracksJSON(jsonQueryTracks);
 		
 		var items = playlists['items'];
@@ -36,7 +37,7 @@
 			htmlCode += "<li><p><img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> " + item['name'] + "</p></li>"
 		});
 		htmlCode += "</ul>"
-		document.getElementById(divID).innerHTML = htmlCode;
+		return htmlCode;
 	}
 };
  
