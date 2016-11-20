@@ -1,10 +1,11 @@
 // Server-side of Spotify BlindTest Application
 
 var express = require('express');
-var cookieParser = require('cookie-parser')
-var querystring = require('querystring')
-var request = require('request')
-var mustache = require('mustache')
+var cookieParser = require('cookie-parser');
+var querystring = require('querystring');
+var request = require('request');
+var mustache = require('mustache');
+var fs = require('fs');
 
 var CLIENT_ID = 'ec4f785e16954921b2fb12f95dc994d0';
 var CLIENT_SECRET = '7a54e6554c3841289b675aaaf06e7d78'; // APP Spotify BlindTest Secret API Key
@@ -100,8 +101,11 @@ app.get('/playlists', function(req, res) {
     console.log('GET PLAYLISTS:');
     console.log(body);
     console.log('=========================');
+    // res.send(body['items'][0]['name'] + '<br>' + body['items'][1]['name']);
 
-    res.send(body['items'][0]['name'] + '<br>' + body['items'][1]['name']);
+    // Si j'appelle la fonction de Steph :
+    // J'aimerais générer ... ?
+
   });
 
 });
