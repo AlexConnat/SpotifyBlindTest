@@ -10,6 +10,7 @@ var fs = require('fs');
 
 // User modules :
 var json_parser = require('./json_parser');
+var answes_analyze = require('./answers_analyze');
 
 var CLIENT_ID = 'ec4f785e16954921b2fb12f95dc994d0';
 var CLIENT_SECRET = '7a54e6554c3841289b675aaaf06e7d78'; // APP Spotify BlindTest Secret API Key
@@ -117,6 +118,7 @@ app.get('/playlists', function(req, res) {
 });
 
 
+var currentTrack;
 app.get('/playlist/:playlist_id', function(req, res) {
 
   // LOAD TRACKS FOR THIS PLAYLIST_ID :
@@ -138,16 +140,39 @@ app.get('/playlist/:playlist_id', function(req, res) {
     // FIXME: Why is the query launched as many times as there are
     // Tracks in the playlist ???
 
-
-
-    var randomTrack = json_parser.getRandomTrack(body);
-    res.send(randomTrack);
+	// Question Time
+    currentTrack = json_parser.getRandomTrack(body);
+    
+    // Only send the mp3 preview because the rest should be hided from client
+    res.send(currentTrack['items']['mp3_preview']);
     
     // When we pass on the next query we should call this :
     //json_parser.incrementIt();
 
   });
 
+});
+
+app.get('/now_playing/:answer', function(req, res) {
+	var correctness = [0, 0];
+	var answer = req.params.answer;
+	
+	// Store the wanted answers
+    currentArtistAnswer = currentTrack['items']['artist_name'];
+    currentTrackAnswer = currentTrack['items']['track_name'];
+    
+    if (answers_analyze.isTrackNameCorrect(answer, currentTrackAnswer) > 0 && correctness[1] == 0) {
+		correctness[1] = 1;
+	} else {
+		
+	}
+	if (answers_analyze.isArtistNameCorrect(answer, currentTrackAnswer) > 0 && correctness[0] == 0) {
+		correctness[0] = 1;
+	} else {
+		
+	}
+	
+	return correctness;
 });
 
 
