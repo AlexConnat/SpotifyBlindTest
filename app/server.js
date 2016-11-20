@@ -142,6 +142,9 @@ app.get('/playlist/:playlist_id', function(req, res) {
 
     var randomTrack = json_parser.getRandomTrack(body);
     res.send(randomTrack);
+    
+    // When we pass on the next query we should call this :
+    //json_parser.incrementIt();
 
   });
 
