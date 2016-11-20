@@ -41,7 +41,7 @@
 			var id = track['id'];
 			htmlCode += "<div id=" + '"' + id + '"' + ">" + "\n";
 			htmlCode += "<img src=\"" + track['cover_url'] + "\" width=\"100\" height\"100\" /> " + "\n";
-			htmlCode += "<p>" + "Artist : " + track['artist_name'] + " Album: " + track['album_name'] + "</p>" + "\n";
+			htmlCode += "<p>" + "Artist : " + track['artist_name'] + " Album: " + track['album_name'] + track['mp3_preview'] + "</p>" + "\n";
 			htmlCode += "<audio controls>" + "\n";
 			htmlCode += "<source src=" + '"' + track['mp3_preview'] + '"' + " type=" + '"' + "audio/mpeg" + '"' + ">" + track['mp3_preview'];
 			htmlCode += "</audio>" + "\n";
@@ -165,7 +165,7 @@ function simplifyTracksJSON (tracks) {
 			"album_name" : currentItem["track"]["album"]["name"],
 			"track_name" : currentItem["track"]["name"],
 			"cover_url" : cover['url'],
-			"mp3_preview" : currentItem["preview_url"],
+			"mp3_preview" : currentItem["track"]["preview_url"],
 			"track_url" : currentItem["track"]["external_urls"]["spotify"]
 			};
 
