@@ -53,14 +53,14 @@
 
 		return htmlCode;
 	},
-	
+
 	/**
 	 * Get one randomly chosen track on the tracks list
 	 */
 	getRandomTrack: function (jsonQueryTracks) {
 		return chooseRandomTrack(jsonQueryTracks);
 	}
-	
+
 };
 
 /**
@@ -192,19 +192,17 @@ function simplifyTracksJSON (tracks) {
 }
 
 var it = 0;
-var tracksSchuffled;
+var tracksSchuffled = [];
 function chooseRandomTrack(jsonQueryTracks) {
 	if (jsonQueryTracks != null && it == 0) {
-		// We init the array on the first step 
-		var tracksArray = [];
+		// We init the array on the first step
 		tracks = simplifyTracksJSON(jsonQueryTracks);
-		tracks.foreach(function(track) {
-			tracksArray.push(track);
+    items = tracks['items']
+		items.forEach(function(item) {
+			tracksSchuffled.push(item);
 		});
-		
-		tracksSchuffled = shuffle(tracksArray);
+		shuffle(tracksSchuffled);
 	}
-	
 	return tracksSchuffled[it++];
 }
 
@@ -217,4 +215,3 @@ function shuffle(array) {
         array[j] = x;
     }
 }
-
