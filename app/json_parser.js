@@ -18,7 +18,7 @@
 		var htmlCode = "<ul>" + "\n"
 		items.forEach(function(item) {
 			var id = item['id'];
-			htmlCode += "<a id=" + '"' + id + '"' + "href=/playlist_" + id + ">" + "\n";
+			htmlCode += "<a id=" + '"' + id + '"' + "href=" + '"' + "/playlist/" + id + '"' + ">" + "\n";
 			htmlCode += "<img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> " + "\n";
 			htmlCode += "<p>" + item['name'] + "</p>" + "\n";
 			htmlCode += "</a><br>" + "\n";
