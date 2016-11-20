@@ -138,8 +138,6 @@ app.get('/playlist/:playlist_id', function(req, res) {
     // FIXME: Why is the query launched as many times as there are
     // Tracks in the playlist ???
 
-
-
     var randomTrack = json_parser.getRandomTrack(body);
     res.send(randomTrack);
 
