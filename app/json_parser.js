@@ -15,14 +15,15 @@
 
 		var items = playlists['items'];
 		
-		var htmlCode = "<ul>"
+		var htmlCode = "<ul>" + "\n"
 		items.forEach(function(item) {
-			htmlCode += "<div id=" + '"' + item['id'] + '"' + ">";
-			htmlCode += "<img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> ";
-			htmlCode += "<p>" + item['name'] + "</p>";
-			htmlCode += "</div><br>";
+			var id = item['id'];
+			htmlCode += "<a id=" + '"' + id + '"' + "href=/playlist_" + id + ">" + "\n";
+			htmlCode += "<img src=\"" + item['image'] + "\" width=\"50\" height\"50\" /> " + "\n";
+			htmlCode += "<p>" + item['name'] + "</p>" + "\n";
+			htmlCode += "</a><br>" + "\n";
 		});
-		htmlCode += "</ul>"
+		htmlCode += "</ul>" + "\n"
 		
 		return htmlCode;
 	},
