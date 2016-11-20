@@ -15,7 +15,8 @@ var CLIENT_ID = 'ec4f785e16954921b2fb12f95dc994d0';
 var CLIENT_SECRET = '7a54e6554c3841289b675aaaf06e7d78'; // APP Spotify BlindTest Secret API Key
 var REDIRECT_URI = 'http://localhost:8888/callback'; // Redirect uri, once login is completed
 
-var ACCES_TOKEN = ''
+var ACCES_TOKEN = '';
+var USER_ID = '';
 
 var app = express();
 
@@ -84,6 +85,8 @@ app.get('/user-info', function(req, res) {
     console.log(body);
     console.log('\n-------------------------\n');
 
+    USER_ID = body.id;
+
     var output = mustache.render('Hello {{name}}!', {name: body.id})
     output += '<br><a href="/playlists" class="btn btn-primary">Begin the Test</a>'
     res.send(output);
@@ -95,20 +98,53 @@ app.get('/user-info', function(req, res) {
 app.get('/playlists', function(req, res) {
 
   var options = {
-    url: 'https://api.spotify.com/v1/me/playlists' + '?' + querystring.stringify({limit: 50}),
+    url: 'https://api.spotify.com/v1/me/playlists?limit=50',
     headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
     json: true
   };
 
   request.get(options, function(error, response, body) {
-    console.log('GET PLAYLISTS:');
+    console.log('GET ALL PLAYLISTS FROM USER ' + USER_ID);
     // console.log(body);
     console.log('=========================');
-    // res.send(body['items'][0]['name'] + '<br>' + body['items'][1]['name']);
 
     // res.send(json_parser.displayPlaylists(body));
     // console.log(json_parser.generateHTMLPlaylists(body));
     res.send(json_parser.generateHTMLPlaylists(body));
+
+  });
+
+});
+
+
+app.get('/playlist/:playlist_id', function(req, res) {
+
+  // LOAD TRACKS FOR THIS PLAYLIST_ID :
+
+  var options = {
+    url: 'https://api.spotify.com/v1/users/'+USER_ID+'/playlists/'+req.params.playlist_id+'/tracks?limit=100',
+    headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
+    json: true
+  };
+
+  request.get(options, function(error, response, body) {
+    console.log('GET TRACKS FROM PLAYLIST #' + req.params.playlist_id);
+    console.log(body);
+
+    // GIVE BODY TO JOJO TO PARSE :
+    // console.log(json_parser.generateHTMLTracks(body));
+    // res.send(json_parser.generateHTMLTracks(body));
+
+    // FIXME: Why is the query launched as many times as there are
+    // Tracks in the playlist ???
+
+
+
+    var randomTrack = json_parser.getRandomTrack(body);
+    res.send(randomTrack);
+    
+    // When we pass on the next query we should call this :
+    //json_parser.incrementIt();
 
   });
 
