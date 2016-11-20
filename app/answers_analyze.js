@@ -52,7 +52,7 @@ var maxToleratedDistForTracks = 3;
 	/**
 	 * Compute the actual distance between the given answer and the real answer
 	 */
-	function isTrackNameCorrect (givenAnswer, trackName) {
+	isTrackNameCorrect: function(givenAnswer, trackName) {
 		// We take the case where there are multiple artists
 		var distance = levenshteinDistance(givenAnswer.trim().toLowerCase(), trackName.trim().toLowerCase());
 		if (distance <= maxToleratedDistForTracks) {
@@ -66,7 +66,7 @@ var maxToleratedDistForTracks = 3;
 	/**
 	 * Compute the actual distance between the given answer and the real answer
 	 */
-	function isArtistCorrect (givenAnswer, artists) {
+	isArtistCorrect: function(givenAnswer, artists) {
 		var possibleAnswers = artists.split(" - ");
 		
 		for (var i = 0; i < possibleAnswers.length; i++) {
