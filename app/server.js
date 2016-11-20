@@ -98,13 +98,13 @@ app.get('/user-info', function(req, res) {
 app.get('/playlists', function(req, res) {
 
   var options = {
-    url: 'https://api.spotify.com/v1/me/playlists' + '?' + querystring.stringify({limit: 50}),
+    url: 'https://api.spotify.com/v1/me/playlists?limit=50',
     headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
     json: true
   };
 
   request.get(options, function(error, response, body) {
-    console.log('GET PLAYLISTS:');
+    console.log('GET ALL PLAYLISTS FROM USER ' + USER_ID);
     // console.log(body);
     console.log('=========================');
 
@@ -132,8 +132,11 @@ app.get('/playlist/:playlist_id', function(req, res) {
     console.log(body);
 
     // GIVE BODY TO JOJO TO PARSE :
-    // console.log(json_parser.generateHTMLPlaylists(body));
+    // console.log(json_parser.generateHTMLTracks(body));
     res.send(json_parser.generateHTMLTracks(body));
+
+    // FIXME: Why is the query launched as many times as there are
+    // Tracks in the playlist ???
   });
 
 });
