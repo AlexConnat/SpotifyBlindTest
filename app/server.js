@@ -97,7 +97,13 @@ app.get('/user-info', function(req, res) {
 });
 
 app.get('/playlists', function(req, res) {
+  // Modulariser ???
+  // playlists = getCurrentUserPlaylists(ACCES_TOKEN); // JSON
+  // html_template = getTemplateForPlaylists(playlists); // --> Qui lui va le précompiler (Mustache) en le "remplissant" avec les bonnes playlists
+  // res.send(html_template);
+  ////////////////////
 
+  // Options of the GET request : (LIMIT=50 here)
   var options = {
     url: 'https://api.spotify.com/v1/me/playlists?limit=50',
     headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
@@ -106,15 +112,12 @@ app.get('/playlists', function(req, res) {
 
   request.get(options, function(error, response, body) {
     console.log('GET ALL PLAYLISTS FROM USER ' + USER_ID);
-    // console.log(body);
     console.log('=========================');
 
     // res.send(json_parser.displayPlaylists(body));
     // console.log(json_parser.generateHTMLPlaylists(body));
     res.send(json_parser.generateHTMLPlaylists(body));
-
   });
-
 });
 
 
@@ -135,7 +138,7 @@ app.get('/playlist/:playlist_id', function(req, res) {
 
     // GIVE BODY TO JOJO TO PARSE :
     // console.log(json_parser.generateHTMLTracks(body));
-    // res.send(json_parser.generateHTMLTracks(body));
+    res.send(json_parser.generateHTMLTracks(body));
 
     // FIXME: Why is the query launched as many times as there are
     // Tracks in the playlist ???
@@ -145,10 +148,10 @@ app.get('/playlist/:playlist_id', function(req, res) {
     // res.send(randomTrack);
 
 	// Question Time
-    currentTrack = json_parser.getRandomTrack(body);
+    // currentTrack = json_parser.getRandomTrack(body);
 
     // Only send the mp3 preview because the rest should be hided from client
-    res.send(currentTrack['items']['mp3_preview']);
+    // res.send(currentTrack['items']['mp3_preview']);
 
     // When we pass on the next query we should call this :
     //json_parser.incrementIt();
