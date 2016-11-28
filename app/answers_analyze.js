@@ -46,9 +46,9 @@ function levenshteinDistance (a, b) {
  * answer and the actual ones for track name and artist name
  */
 var maxToleratedDistForArtist = 2;
-var maxToleratedDistForTracks = 3;
+var maxToleratedDistForTracks = 2;
 
- module.exports = {
+module.exports = {
 	/**
 	 * Compute the actual distance between the given answer and the real answer
 	 */

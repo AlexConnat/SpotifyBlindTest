@@ -15,15 +15,19 @@
 
 		var items = playlists['items'];
 
-		var htmlCode = "<div id=\"playlists-container\">" + "\n"
+		var htmlCode = '<div class="valign-wrapper" style="width:100%; height:20%;">' + '\n';
+		htmlCode += '<ul class="collection with-header grey darken-4" style="width:100%">' + '\n';
+		htmlCode += '<li class="collection-header"><h4>Your Playlists</h4></li>' + '\n';
+		
 		items.forEach(function(item) {
 			var id = item['id'];
-			htmlCode += "<a id=" + '"' + id + '"' + "href=" + '"' + "/playlist/" + id + '"' + ">" + "\n";
-			htmlCode += "<img src=\"" + item['image'] + "\" width=\"100\" height\"100\" /> " + "\n";
-			htmlCode += "<p>" + item['name'] + "</p>" + "\n";
-			htmlCode += "</a><br>" + "\n";
+			htmlCode += '<a class="collection-item avatar" id=' + '"' + id + '"' + 'href=' + '"' + '/playlist/' + id + '"' + ' style="width:100%">' + '\n';
+			htmlCode += '<img src="' + item['image'] + '"' + 'alt="Playlist image" style="max-height: 100%" class="circle" />' + '\n';
+			htmlCode += '<span class="title">' + item['name'] + '</span>' + '\n';
+			htmlCode += '</a>' + '\n';
 		});
-		htmlCode += "</div>" + "\n"
+		htmlCode += '</ul>' + '\n';
+		htmlCode += '</div>' + '\n';
 
 		return htmlCode;
 	},
@@ -40,14 +44,14 @@
 		items.forEach(function(track) {
 			var id = track['id'];
 			htmlCode += "<div id=" + '"' + id + '"' + ">" + "\n";
-			htmlCode += "<img src=\"" + track['cover_url'] + "\" width=\"100\" height\"100\" /> " + "\n";
+			htmlCode += "<img src=\"" + track['cover_url'] + '"' + 'width="100" height\"100\" />' + "\n";
 			htmlCode += "<p>" + "Artist : " + track['artist_name'] + " Album: " + track['album_name'] + "</p>" + "\n";
       htmlCode += "<p>" + track['mp3_preview'] + "</p>" + "\n";
       htmlCode += "<p>" + track['track_name'] + "</p>" + "\n";
       htmlCode += "<audio controls>" + "\n";
 			htmlCode += "<source src=" + '"' + track['mp3_preview'] + '"' + " type=" + '"' + "audio/mpeg" + '"' + ">" + track['mp3_preview'];
 			htmlCode += "</audio>" + "\n";
-			htmlCode += "</div><br>" + "\n";
+			htmlCode += "</div>";
 		});
 		htmlCode += "</div>"
 

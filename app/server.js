@@ -7,10 +7,12 @@ var querystring = require('querystring');
 var request = require('request');
 var mustache = require('mustache');
 var fs = require('fs');
+//var path = require('path');
 
 // User modules :
 var json_parser = require('./json_parser');
 var answes_analyze = require('./answers_analyze');
+var html_generator = require('./generate_html');
 
 var CLIENT_ID = 'ec4f785e16954921b2fb12f95dc994d0';
 var CLIENT_SECRET = '7a54e6554c3841289b675aaaf06e7d78'; // APP Spotify BlindTest Secret API Key
@@ -71,13 +73,13 @@ app.get('/callback', function(req, res) {
 
 app.get('/user-info', function(req, res) {
 
-  var options = {
-    url: 'https://api.spotify.com/v1/me',
-    headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
-    json: true
-  };
+	var options = {
+	url: 'https://api.spotify.com/v1/me',
+	headers: { 'Authorization': 'Bearer ' + ACCES_TOKEN },
+	json: true
+	};
 
-  request.get(options, function(error, response, body) {
+	request.get(options, function(error, response, body) {
 
     if (!body.id) {
       res.redirect('/login')
@@ -87,7 +89,10 @@ app.get('/user-info', function(req, res) {
     console.log('\n-------------------------\n');
 
     USER_ID = body.id;
-
+	
+	// Just to be redirected to the interesting page (:
+	res.redirect('/playlists');
+	
     var output = mustache.render('Hello {{name}}!', {name: body.id})
     output += '<br><a href="/playlists" class="btn btn-primary">Begin the Test</a>'
     res.send(output);
@@ -114,9 +119,15 @@ app.get('/playlists', function(req, res) {
     console.log('GET ALL PLAYLISTS FROM USER ' + USER_ID);
     console.log('=========================');
 
-    // res.send(json_parser.displayPlaylists(body));
-    // console.log(json_parser.generateHTMLPlaylists(body));
-    res.send(json_parser.generateHTMLPlaylists(body));
+	// Read the header file to put it at the start of the new page
+	header = html_generator.getHeader();
+	
+	// res.write permits us to write several data to generate the same page.
+	res.write(header);
+    res.write(json_parser.generateHTMLPlaylists(body));
+    res.write("</body>\n</html>");
+    
+    res.end();
   });
 });
 
@@ -134,11 +145,11 @@ app.get('/playlist/:playlist_id', function(req, res) {
 
   request.get(options, function(error, response, body) {
     console.log('GET TRACKS FROM PLAYLIST #' + req.params.playlist_id);
-    console.log(body);
+    // console.log(body);
 
     // GIVE BODY TO JOJO TO PARSE :
     // console.log(json_parser.generateHTMLTracks(body));
-    res.send(json_parser.generateHTMLTracks(body));
+    //res.send(json_parser.generateHTMLTracks(body));
 
     // FIXME: Why is the query launched as many times as there are
     // Tracks in the playlist ???
@@ -148,11 +159,20 @@ app.get('/playlist/:playlist_id', function(req, res) {
     // res.send(randomTrack);
 
 	// Question Time
-    // currentTrack = json_parser.getRandomTrack(body);
+    currentTrack = json_parser.getRandomTrack(body);
+    
+    // Print the json of the randomly chosen track
+    console.log(currentTrack);
+    
+    header = html_generator.getHeader();
+    question = html_generator.generateQuestionTemplate(currentTrack);
 
     // Only send the mp3 preview because the rest should be hided from client
     // res.send(currentTrack['items']['mp3_preview']);
-
+	res.write(header);
+	res.write(question);
+	res.write("</body>\n</html>");
+	res.end();
     // When we pass on the next query we should call this :
     //json_parser.incrementIt();
 
@@ -168,6 +188,7 @@ app.get('/now_playing/:answer', function(req, res) {
     currentArtistAnswer = currentTrack['items']['artist_name'];
     currentTrackAnswer = currentTrack['items']['track_name'];
 
+	// Should think about sending a json in order to treat all cases easily.
     if (answers_analyze.isTrackNameCorrect(answer, currentTrackAnswer) > 0 && correctness[1] == 0) {
 		correctness[1] = 1;
 	} else {
